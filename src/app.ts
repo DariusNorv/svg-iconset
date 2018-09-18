@@ -1,7 +1,7 @@
 import { createWriteStream, WriteStream } from 'fs';
 import { join } from 'path';
 
-import { MainConfig, SVGOConfig } from './config';
+import { MainConfig, SVGOConfig, OptimizedResponse } from './config';
 import { svgClean } from './modules/svgo.clean';
 import { makeConfig } from './modules/svgo.config';
 
@@ -28,13 +28,25 @@ export class SvgIconset {
     }
 
     svgClean(this.config.source, this.svgoPlugin)
-      .then(files => {
-        createWriteStream(join(process.cwd(), this.config.source, `${this.config.result}-iconset.svg`))
-          .once('open', function (this: WriteStream) {
-            this.write(`<svg>${files}</svg>`);
+      .then(optimizedResponse => {
+        let idx = 0;
+        const ids = optimizedResponse.map(el => el.id);
+        Promise.all(optimizedResponse.map(el => el.optimized))
+          .then(resFiles => {
+            createWriteStream(join(process.cwd(), this.config.source, `${this.config.result}-iconset.svg`))
+              .once('open', function (this: WriteStream) {
+                try {
+                  const data = resFiles.map(res => res.data.replace(/<svg /, `<svg id="${ids[idx]}" `));
+                  this.write(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">${data.join('')}</svg>`);
+                  idx++;
+                } catch (err) {
+                  console.log('ERROR', err);
+                }
+              })
+              .on('close', () => console.log(`Succesfully written file ${this.config.result}-iconset.svg`))
+              .on('error', () => console.error('Something’s wrong try again'));
           })
-          .on('close', () => console.log(`Succesfully written file ${this.config.result}-iconset.svg`))
-          .on('error', () => console.error('Something’s wrong try again'));
+          .catch(console.error);
       })
       .catch(err => console.error(err));
   }

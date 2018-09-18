@@ -14,6 +14,16 @@ export interface SvgOptimizeConfig {
   removeViewBox?: boolean
 }
 
+export interface SVGOResponse {
+  data: string;
+  info: { [propname: string]: string }
+}
+
+export interface OptimizedResponse {
+  id: string;
+  optimized: SVGOResponse
+}
+
 export interface MainConfig {
   source: string;
   result: string;
