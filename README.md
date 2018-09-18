@@ -9,11 +9,11 @@ Plugin to create iconsets from SVG files
 
 Support command line interface:
 ```
-npm install svg-iconset -g
+npm install @darius/svg-iconset -g
 ```
 Or you can install for yout project
 ```
-npm install svg-iconset --save
+npm install @darius/svg-iconset --save
 ```
 ## Usage
 
