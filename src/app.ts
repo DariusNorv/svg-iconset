@@ -33,17 +33,19 @@ export class SvgIconset {
         const ids = optimizedResponse.map(el => el.id);
         Promise.all(optimizedResponse.map(el => el.optimized))
           .then(resFiles => {
-            createWriteStream(join(process.cwd(), this.config.source, `${this.config.result}-iconset.svg`))
+            const resultFile = join(process.cwd(), this.config.source, `${this.config.result}-iconset.svg`);
+            createWriteStream(resultFile)
               .once('open', function (this: WriteStream) {
                 try {
                   const data = resFiles.map(res => res.data.replace(/<svg /, `<svg id="${ids[idx]}" `));
                   this.write(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">${data.join('')}</svg>`);
                   idx++;
+                  this.end();
                 } catch (err) {
                   console.log('ERROR', err);
                 }
               })
-              .on('close', () => console.log(`Succesfully written file ${this.config.result}-iconset.svg`))
+              .on('close', () => console.log(`Succesfully written file ${resultFile}`))
               .on('error', () => console.error('Something’s wrong try again'));
           })
           .catch(console.error);
