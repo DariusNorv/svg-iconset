@@ -1,0 +1,38 @@
+{
+  "name": "svg-iconset",
+  "version": "0.0.1",
+  "description": "create iconset from separated svg icons",
+  "main": "./dist/app.js",
+  "scripts": {
+    "build": "tsc src/bin",
+    "test": "./test"
+  },
+  "bin": {
+    "svg-iconset": "./dist/bin.js"
+  },
+  "keywords": [
+    "svg",
+    "iconset",
+    "sprite",
+    "svg-sprite"
+  ],
+  "author": "Kostya V <djnafany@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "svgo": "^1.1.1",
+    "yargs": "^12.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^10.10.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DariusNorv/svg-iconset.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DariusNorv/svg-iconset/issues"
+  },
+  "homepage": "https://github.com/DariusNorv/svg-iconset#readme"
+}
