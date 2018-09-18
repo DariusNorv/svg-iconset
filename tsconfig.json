@@ -15,8 +15,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "types": [
-      "node",
-      "mocha"
+      "node"
     ]
   },
   "exclude": [
