@@ -3,13 +3,13 @@ import { join } from 'path';
 
 import { MainConfig, SVGOConfig, OptimizedResponse } from './config';
 import { svgClean } from './modules/svgo.clean';
-import { makeConfig } from './modules/svgo.config';
+import { makeConfig, defaultConfig } from './modules/svgo.config';
 
 const SVGO = require('svgo');
 
 export class SvgIconset {
 
-  private optimizeConfig: SVGOConfig;
+  private optimizeConfig: { [prop: string]: boolean }[];
   private isValid: boolean = true;
   private svgoPlugin: typeof SVGO;
 
@@ -18,8 +18,9 @@ export class SvgIconset {
       this.isValid = false;
     }
     this.optimizeConfig = config.optimize !== undefined ? makeConfig(config.optimize) : makeConfig();
-    this.svgoPlugin = new SVGO(this.optimizeConfig);
-
+    this.svgoPlugin = new SVGO({
+      plugins: this.optimizeConfig
+    });
   }
 
   public createSet() {

@@ -1,27 +1,65 @@
-import { SVGOConfig, SvgOptimizeConfig } from '../config';
+import { SVGOConfig } from '../config';
 
-const defaultConfig: SVGOConfig = [
-  {
-    removeAttrs: {
-      attrs: '(width|height)'
-    },
-  },
-  { removeViewBox: false }
-];
+export const defaultConfig: SVGOConfig = {
+  removeDoctype: true,
+  removeXMLProcInst: true,
+  removeComments: true,
+  removeMetadata: true,
+  removeXMLNS: false,
+  removeEditorsNSData: true,
+  cleanupAttrs: true,
+  inlineStyles: true,
+  minifyStyles: true,
+  convertStyleToAttrs: true,
+  cleanupIDs: true,
+  removeRasterImages: false,
+  removeUselessDefs: true,
+  cleanupNumericValues: true,
+  cleanupListOfValues: false,
+  convertColors: true,
+  removeUnknownsAndDefaults: true,
+  removeNonInheritableGroupAttrs: true,
+  removeUselessStrokeAndFill: true,
+  removeViewBox: false,
+  cleanupEnableBackground: true,
+  removeHiddenElems: true,
+  removeEmptyText: true,
+  convertShapeToPath: true,
+  moveElemsAttrsToGroup: true,
+  moveGroupAttrsToElems: true,
+  collapseGroups: true,
+  convertPathData: true,
+  convertTransform: true,
+  removeEmptyAttrs: true,
+  removeEmptyContainers: true,
+  mergePaths: true,
+  removeUnusedNS: true,
+  sortAttrs: false,
+  removeTitle: true,
+  removeDesc: true,
+  removeDimensions: true,
+  removeStyleElement: false,
+  removeScriptElement: false,
 
-export function makeConfig(config?: SvgOptimizeConfig): SVGOConfig {
-
-  if (config !== undefined) {
-    const { attrs, removeViewBox } = config;
-
-    if (attrs !== undefined) {
-      defaultConfig[0].removeAttrs.attrs = `(${attrs.replace(/,\s/g, '|')})`;
-    }
-
-    if (removeViewBox) {
-      defaultConfig[1].removeViewBox = removeViewBox;
+  *[Symbol.iterator]() {
+    for (const name of Object.keys(this)) {
+      yield JSON.parse(`{"${name}": ${(this as any)[name]}}`);
     }
   }
+};
 
-  return defaultConfig;
+export function makeConfig(config?: SVGOConfig): { [prop: string]: boolean }[] {
+
+  if (config !== undefined) {
+    return [...defaultConfig].map(item => {
+      const key = Object.keys(item)[0];
+      if (config.hasOwnProperty(key)) {
+        item[key] = (config as any)[key];
+      }
+
+      return item;
+    });
+  }
+
+  return [...defaultConfig];
 }

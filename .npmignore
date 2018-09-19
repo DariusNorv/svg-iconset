@@ -1,6 +1,8 @@
 src/
+tests/
 .vscode/
 .idea/
+.tests/
 
 tsconfig.json
 tslint.json

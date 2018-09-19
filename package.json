@@ -5,9 +5,9 @@
   "main": "./dist/app.js",
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "postpublish": "rm -rf ./dist/",
-    "test": "./test"
+    "test": "tsc -p tests/tsconfig.test.json"
   },
   "bin": {
     "svg-iconset": "./dist/bin.js"
