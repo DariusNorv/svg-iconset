@@ -1,5 +1,5 @@
 {
-  "name": "svg-iconset-builder",
+  "name": "@vkl/svg-iconset-builder",
   "version": "0.0.6",
   "description": "create iconset from separated svg icons",
   "main": "./dist/app.js",
