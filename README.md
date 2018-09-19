@@ -24,7 +24,7 @@ svg-iconset --source=assets/images/icons --result=icons
 ```
 Creates a file `icons-iconset.svg` in same folder
 ### In Project
-```
+```javascript
 const SvgIconset = require('svg-iconset');
 
 const config = {
@@ -38,3 +38,7 @@ const config = {
 
 new SvgIconset(config).createSet();
 ```
+
+#### Additional
+[Default SVGO optimisation config](https://github.com/DariusNorv/svg-iconset/wiki#default-svgo-configuration)
+
