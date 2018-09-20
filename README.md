@@ -32,7 +32,7 @@ const config = {
   result: 'icons', // Required
   // This is optional for optimize files using SVGO plugins
   optimize: {
-    removeViewBox: true, // Will remove attribute viewBox (default false)
+    removeViewBox: true, // Will remove attribute viewBox
   }
 }
 
