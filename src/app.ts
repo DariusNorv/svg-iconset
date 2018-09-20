@@ -30,7 +30,6 @@ export class SvgIconset {
 
     svgClean(this.config.source, this.svgoPlugin)
       .then(optimizedResponse => {
-        let idx = 0;
         const ids = optimizedResponse.map(el => el.id);
         Promise.all(optimizedResponse.map(el => el.optimized))
           .then(resFiles => {
@@ -38,9 +37,8 @@ export class SvgIconset {
             createWriteStream(resultFile)
               .once('open', function (this: WriteStream) {
                 try {
-                  const data = resFiles.map(res => res.data.replace(/<svg /, `<svg id="${ids[idx]}" `));
+                  const data = resFiles.map((res, idx) => res.data.replace(/<svg /, `<svg id="${ids[idx]}" `));
                   this.write(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">${data.join('')}</svg>`);
-                  idx++;
                   this.end();
                 } catch (err) {
                   console.log('ERROR', err);
